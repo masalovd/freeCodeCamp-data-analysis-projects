@@ -14,7 +14,7 @@ df = df[(df['value'] >= df['value'].quantile(0.025)) & (df['value'] <= df['value
 
 
 def draw_line_plot():
-    plt.figure(figsize=(18, 6))
+    fig = plt.figure(figsize=(18, 6))
     plt.plot(df['date'], df['value'], linestyle='-', color='r')
 
     plt.title('Daily freeCodeCamp Forum Page Views 5/2016-12/2019')
@@ -59,6 +59,9 @@ def draw_box_plot():
     df_box['year'] = [d.year for d in df_box.date]
     df_box['month'] = [d.strftime('%b') for d in df_box.date]
 
+    month_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    df_box['month'] = pd.Categorical(df_box['month'], categories=month_order, ordered=True)
+    
     # Draw box plots (using Seaborn)
     fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
     sns.boxplot(x='year', y='value', data=df_box, palette='pastel', ax=ax1)
